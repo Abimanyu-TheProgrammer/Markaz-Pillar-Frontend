@@ -30,6 +30,7 @@ export default function Layout({ children }) {
                 onClose={() => dispatch({ type: dispatchTypes.SNACKBAR_CLOSE })}
                 key={"bottom" + "center"}
                 autoHideDuration={4000}
+                sx={{ mb: 5 }}
             >
                 <Alert onClose={() => dispatch({ type: dispatchTypes.SNACKBAR_CLOSE })} severity={snackbarSeverity} sx={{ width: '100%' }}>
                     {snackbarMessage}

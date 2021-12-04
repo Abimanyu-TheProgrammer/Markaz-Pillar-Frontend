@@ -164,7 +164,7 @@ function AdminOrUserTemplate(props) {
       {/* Tabs and Contents */}
       {!!data && data.totalElement !== 0 && isAdmin ? (
         <TabContext value={tabIndex}>
-          <AppBar position="relative" color="transparent" elevation={0}>
+          <AppBar position="relative" color="transparent" elevation={0} sx={{ borderBottom: 1, borderColor: 'divider' }}>
             <TabList onChange={handleTabIndex}>
               <Tab
                 data-testid="tab-grid-at-admin-or-user-template"
@@ -197,6 +197,7 @@ function AdminOrUserTemplate(props) {
               value={tabIndex}
               index={1}
               dir={theme.direction}
+              sx={{ pl: 0, pr: 0 }}
             >
               <SwipeableEnableScroll>{TableView}</SwipeableEnableScroll>
             </TabPanel>
