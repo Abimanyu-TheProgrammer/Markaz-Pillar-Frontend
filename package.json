@@ -33,6 +33,7 @@
     "lodash.throttle": "^4.1.1",
     "next": "^11.1.2",
     "next-connect": "^0.10.2",
+    "next-pwa": "^5.4.1",
     "nyc": "^15.1.0",
     "react": "^17.0.2",
     "react-cookie": "^4.1.1",
