@@ -26,9 +26,13 @@ import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import { axiosMain } from '../axiosInstances';
 import Image from 'next/image'
 import Cookies from 'universal-cookie';
+import useOnlineStatus from '../hook/useOnlineStatus';
+import Fallback from './_offline';
 
 export default function Login() {
   const router = useRouter();
+  const isOnline = useOnlineStatus()
+
   const cookies = new Cookies();
 
   const { state, dispatch } = useAppContext();
@@ -75,6 +79,7 @@ export default function Login() {
       .catch(e => {
         setLoading(false)
 
+        if (!isOnline) return (<Fallback />)
         setError(true)
         dispatch({
           type: dispatchTypes.LOGIN_FAIL
@@ -104,6 +109,7 @@ export default function Login() {
   const handleClickShowPassword = () => {
     setShow(!show)
   };
+  if (!isOnline) return (<Fallback />)
   return (
     <div>
       <Grid container component="main" sx={{ height: '100vh' }}>
