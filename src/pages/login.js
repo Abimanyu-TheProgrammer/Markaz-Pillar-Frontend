@@ -77,7 +77,8 @@ export default function Login() {
       })
       .catch(e => {
         setLoading(false)
-        return(<Fallback />)
+
+        if (!isOnline) return (<Fallback />)
         setError(true)
         dispatch({
           type: dispatchTypes.LOGIN_FAIL
@@ -96,6 +97,7 @@ export default function Login() {
   const handleClickShowPassword = () => {
     setShow(!show)
   };
+  if (!isOnline) return (<Fallback />)
   return (
     <div>
       <Grid container component="main" sx={{ height: '100vh' }}>
