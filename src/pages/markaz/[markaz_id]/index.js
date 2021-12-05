@@ -7,8 +7,6 @@ import ArrowBack from "../../../component/modules/ArrowBack";
 import ProgresDonasiFooter from "../../../component/modules/ProgresDonasiFooter"
 import { enumRoutes, markazCategory } from "../../../context/AppReducer";
 import { Typography } from "@mui/material";
-import Fallback from "../../_offline";
-import useOnlineStatus from "../../../hook/useOnlineStatus";
 
 const fetcher = url => axiosMain.get(url).then(res => res.data)
 export default function MarkazDetail(props) {
@@ -62,11 +60,7 @@ export default function MarkazDetail(props) {
     }
   }
 
-  const isOnline = useOnlineStatus()
-  if (error) {
-    if (!isOnline) return (<Fallback />)
-    return (<ArrowBack href={enumRoutes.MEMBER_MARKAZ} />);
-  }
+  if (error) return (<ArrowBack href={enumRoutes.MEMBER_MARKAZ} />);
   if (!responseDetailMarkaz) return (
     <>
       <ArrowBack href={enumRoutes.MEMBER_MARKAZ} />

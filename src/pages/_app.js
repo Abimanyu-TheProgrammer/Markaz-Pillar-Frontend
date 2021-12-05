@@ -4,22 +4,19 @@ import Layout from '../component/layout'
 import ProtectedRoutes from '../ProtectedRoutes'
 import { ThemeProvider } from '@mui/material/styles';
 import { theme } from '../theme'
-import { OnlineStatusProvider } from '../hook/useOnlineStatus'
 
 
 function MyApp({ Component, pageProps, router }) {
   return (
-    <OnlineStatusProvider >
-      <ThemeProvider theme={theme}>
-        <AppWrapper>
-          <ProtectedRoutes router={router}>
-            <Layout>
-              <Component {...pageProps} />
-            </Layout>
-          </ProtectedRoutes>
-        </AppWrapper>
-      </ThemeProvider>
-    </OnlineStatusProvider>
+    <ThemeProvider theme={theme}>
+      <AppWrapper>
+        <ProtectedRoutes router={router}>
+          <Layout>
+            <Component {...pageProps} />
+          </Layout>
+        </ProtectedRoutes>
+      </AppWrapper>
+    </ThemeProvider>
   )
 }
 

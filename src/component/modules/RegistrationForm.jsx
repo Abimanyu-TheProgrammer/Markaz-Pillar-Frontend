@@ -9,8 +9,6 @@ import OAuthButton from './OAuthButton'
 import { useAppContext } from '../../context/AppContext'
 import { dispatchTypes } from '../../context/AppReducer'
 import jwtDecode from 'jwt-decode'
-import Fallback from '../../pages/_offline'
-import useOnlineStatus from '../../hook/useOnlineStatus'
 
 export default function RegistrationForm(props) {
     const {
@@ -24,7 +22,6 @@ export default function RegistrationForm(props) {
         setLoading
     } = props
 
-    const isOnline = useOnlineStatus()
     const { dispatch } = useAppContext();
 
     const handleChange = ({ target }) => {
@@ -60,7 +57,7 @@ export default function RegistrationForm(props) {
             })
             .catch(e => {
                 setLoading(false)
-                if (!isOnline) return (<Fallback />)
+
                 setError(prev => ({
                     ...prev,
                     ...e.response.data.result
@@ -81,7 +78,6 @@ export default function RegistrationForm(props) {
     const handleClickShowPassword = () => {
         setShow(!show)
     };
-    if (!isOnline) return (<Fallback />)
     return (
         <>
             <Box
