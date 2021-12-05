@@ -1,4 +1,3 @@
-import { Box } from '@mui/system';
 import React from 'react';
 import ErrorView from '../component/templates/ErrorView'
 
@@ -51,9 +50,7 @@ const SvgIll = () => {
 }
 const Fallback = () => (
     <>
-        <Box display='flex' justifyContent='center' alignItems='center' width='100%' height='100%'>
-            <ErrorView statusCode='offline' title='Maaf, anda tidak memiliki koneksi internet.' svg={<SvgIll />} />
-        </Box>
+        <ErrorView statusCode='offline' title='Maaf, anda tidak memiliki koneksi internet.' svg={<SvgIll />}/>
     </>
 );
 
