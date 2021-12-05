@@ -18,8 +18,7 @@ export default function AdminSantri(props) {
     error,
     mutate,
   } = useSWR(
-    `/santri/search?page=${page - 1}&n=${entries}&${
-      !!ageFilter ? "sortedAge=" + ageFilter : ""
+    `/santri/search?page=${page - 1}&n=${entries}&${!!ageFilter ? "sortedAge=" + ageFilter : ""
     }${!!nameFilter ? "sortedName=" + nameFilter : ""}
     &${!!searchSantri && "name=" + searchSantri}
     `,
@@ -88,6 +87,7 @@ export default function AdminSantri(props) {
   const GridViewAdminSantri = () => {
     return (
       <GridView
+        variant='santri'
         data={responseSantri}
         detail="admin/santri"
         handleDelete={handleDeleteSantri}
