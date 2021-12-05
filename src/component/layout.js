@@ -6,6 +6,7 @@ import { useAppContext } from '../context/AppContext';
 import { dispatchTypes } from '../context/AppReducer';
 import { Box } from '@mui/system';
 import MuiAlert from '@mui/material/Alert';
+import useOnlineStatus from '../hook/useOnlineStatus';
 
 export default function Layout({ children }) {
     const router = useRouter();

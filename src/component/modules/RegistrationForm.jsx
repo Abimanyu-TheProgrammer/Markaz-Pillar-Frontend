@@ -6,6 +6,11 @@ import React, { useState } from 'react'
 import Copyright from './Copyright'
 import Link from 'next/link'
 import OAuthButton from './OAuthButton'
+import { useAppContext } from '../../context/AppContext'
+import { dispatchTypes } from '../../context/AppReducer'
+import jwtDecode from 'jwt-decode'
+import Fallback from '../../pages/_offline'
+import useOnlineStatus from '../../hook/useOnlineStatus'
 
 export default function RegistrationForm(props) {
     const {
@@ -18,6 +23,9 @@ export default function RegistrationForm(props) {
         loading,
         setLoading
     } = props
+
+    const isOnline = useOnlineStatus()
+    const { dispatch } = useAppContext();
 
     const handleChange = ({ target }) => {
         const { name, value } = target;
@@ -35,12 +43,45 @@ export default function RegistrationForm(props) {
         event.preventDefault();
         setLoading(true)
         await apiCall(data)
+            .then(response => {
+                setLoading(false)
+
+                const decodedJWT = jwtDecode(response.data.result.accessToken)
+                dispatch({
+                    type: dispatchTypes.REGISTRATION_SUCCEED,
+                    payload: {
+                        currentUser: decodedJWT.sub,
+                        currentUserRole: decodedJWT.role,
+                        currentAccessToken: response.data.result.accessToken,
+                        currentRefreshToken: response.data.result.refreshToken
+                    }
+                });
+
+            })
+            .catch(e => {
+                setLoading(false)
+                if (!isOnline) return (<Fallback />)
+                setError(prev => ({
+                    ...prev,
+                    ...e.response.data.result
+                }))
+                if (e.response.data.result.message) {
+                    dispatch({
+                        type: dispatchTypes.REGISTRATION_FAIL,
+                        payload: {
+                            message: "Alamat email sudah digunakan"
+                        }
+                    })
+                }
+
+            })
     }
 
     const [show, setShow] = useState(false)
     const handleClickShowPassword = () => {
         setShow(!show)
     };
+    if (!isOnline) return (<Fallback />)
     return (
         <>
             <Box
