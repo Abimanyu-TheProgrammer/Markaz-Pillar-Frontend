@@ -9,11 +9,12 @@ const fetcher = (url) => axiosMain.get(url).then((res) => res.data);
 export default function AdminUsers() {
   const [page, setPage] = useState(1);
   const [entries, setEntries] = useState(10);
+  const [searchUser, setSearchUser] = useState("");
   const {
     data: responsePengguna,
     error,
     mutate,
-  } = useSWR(`/admin/user?page=${page - 1}&n=${entries}`, fetcher);
+  } = useSWR(`/admin/user?page=${page - 1}&n=${entries}&${!!searchUser && "name=" + searchUser}`, fetcher);
 
   const handleDeletePengguna = async (id) => {
     await axiosMain
@@ -55,6 +56,8 @@ export default function AdminUsers() {
         setEntries={setEntries}
         error={error}
         mutate={mutate}
+        searchTerm={searchUser}
+        setSearchTerm={setSearchUser}
         TableView={<TableViewDataPengguna />}
       />
     </>

@@ -11,6 +11,8 @@ import { useAppContext } from "../../../../context/AppContext";
 import { dispatchTypes, enumRoutes } from "../../../../context/AppReducer";
 
 const fetcher = (url) => axiosMain.get(url).then((res) => res.data);
+
+
 export default function DetailKegiatan(props) {
   const { detailKegiatan } = props;
   const router = useRouter();
@@ -25,52 +27,53 @@ export default function DetailKegiatan(props) {
       dispatch({ type: dispatchTypes.LOGIN_NEEDED_RELAWAN });
       router.push(enumRoutes.LOGIN);
     }
-    const { kegiatan_id } = router.query
-    const { data: responseDetailKegiatan, error, mutate } = useSWR(router.isReady ? `/volunteer?id=${kegiatan_id}` : null,
-        fetcher,
-        { fallbackData: detailKegiatan, refreshInterval: 10000 }
-    )
-    const [convertedData, setConvertedData] = useState()
+  }
+  const { kegiatan_id } = router.query
+  const { data: responseDetailKegiatan, error, mutate } = useSWR(router.isReady ? `/volunteer?id=${kegiatan_id}` : null,
+    fetcher,
+    { fallbackData: detailKegiatan, refreshInterval: 10000 }
+  )
+  const [convertedData, setConvertedData] = useState()
 
-    
-    useEffect(() => {
-        if (!!responseDetailKegiatan) {
-            const dataResult = responseDetailKegiatan.result
-            setConvertedData({
-                ...responseDetailKegiatan,
-                result: {
-                    ...dataResult,
-                    title: dataResult.name,
-                    description: dataResult.description,
-                    image: dataResult.thumbnailURL,
-                    details: [
-                        {
-                            subtitle: "Syarat",
-                            detail: dataResult.term
-                        },
-                        {
-                            subtitle: "Manfaat",
-                            detail: dataResult.benefit
-                        },
-                        {
-                            subtitle: "Jumlah Volunteer",
-                            detail: `${dataResult.volunteerApplied} / ${dataResult.volunteerNeeded}`
-                        },
-                        {
-                            subtitle: "Jadwal",
-                            detail: dataResult.schedule
-                        },
-                        {
-                            subtitle: "Lokasi",
-                            detail: dataResult.location
-                        },
-                    ],
-                }
-            })
-        } else {
-            mutate()
+
+  useEffect(() => {
+    if (!!responseDetailKegiatan) {
+      const dataResult = responseDetailKegiatan.result
+      setConvertedData({
+        ...responseDetailKegiatan,
+        result: {
+          ...dataResult,
+          title: dataResult.name,
+          description: dataResult.description,
+          image: dataResult.thumbnailURL,
+          details: [
+            {
+              subtitle: "Syarat",
+              detail: dataResult.term
+            },
+            {
+              subtitle: "Manfaat",
+              detail: dataResult.benefit
+            },
+            {
+              subtitle: "Jumlah Volunteer",
+              detail: `${dataResult.volunteerApplied} / ${dataResult.volunteerNeeded}`
+            },
+            {
+              subtitle: "Jadwal",
+              detail: dataResult.schedule
+            },
+            {
+              subtitle: "Lokasi",
+              detail: dataResult.location
+            },
+          ],
         }
-    }, [mutate, responseDetailKegiatan])
+      })
+    } else {
+      mutate()
+    }
+  }, [mutate, responseDetailKegiatan])
 
 
   useEffect(() => {
@@ -130,13 +133,14 @@ export default function DetailKegiatan(props) {
   };
 
   if (error) return <ArrowBack href={enumRoutes.MEMBER_KEGIATAN} />;
-  if (!responseDetailKegiatan)
+  if (!responseDetailKegiatan) {
     return (
       <>
         <ArrowBack href={enumRoutes.MEMBER_KEGIATAN} />
         <Typography component="p">Loading Kegiatan Information..</Typography>
       </>
     );
+  }
   return (
     <>
       <ArrowBack href={enumRoutes.MEMBER_KEGIATAN} />
@@ -150,6 +154,7 @@ export default function DetailKegiatan(props) {
     </>
   );
 }
+
 
 export async function getStaticProps(context) {
   const id = context.params.kegiatan_id;
@@ -170,7 +175,9 @@ export async function getStaticPaths() {
   const staticAllKegiatan = await staticAllKegiatanResponse.data;
 
   const paths = await staticAllKegiatan.result.map((kegiatan) => ({
-    params: { kegiatan_id: kegiatan.id.toString() },
+    params: {
+      kegiatan_id: kegiatan.id.toString()
+    },
   }));
 
   return {
