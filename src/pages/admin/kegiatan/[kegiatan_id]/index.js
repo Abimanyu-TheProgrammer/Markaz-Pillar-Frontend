@@ -28,7 +28,7 @@ export default function DetailKegiatan() {
         if (stateLoaded && currentUser) {
             router.push({ pathname: href, query: { ...router.query } })
         } else {
-            dispatch({ type: dispatchTypes.LOGIN_NEEDED })
+            dispatch({ type: dispatchTypes.LOGIN_NEEDED_RELAWAN })
             router.push(enumRoutes.LOGIN)
         }
     }
@@ -79,9 +79,7 @@ export default function DetailKegiatan() {
     const KelolaKegiatanCTA = () => {
         return (
             <>
-                <Link href={`${enumRoutes.ADMIN_KEGIATAN}/${kegiatan_id}/relawan`} passHref>
-                    <Button variant='contained'>Kelola Relawan</Button>
-                </Link>
+                <Button variant='contained' onClick={() => handleRelawan(`${enumRoutes.ADMIN_KEGIATAN}/${kegiatan_id}/relawan`)}>Kelola Relawan</Button>
             </>
         )
     }

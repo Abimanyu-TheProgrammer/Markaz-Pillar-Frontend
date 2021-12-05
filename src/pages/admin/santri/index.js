@@ -106,6 +106,7 @@ export default function AdminSantri(props) {
         titleThree="Domisili"
         titleFour="Jenis Kelamin"
         titleFive="Tanggal Lahir"
+        mutate={mutate}
       />
     );
   };

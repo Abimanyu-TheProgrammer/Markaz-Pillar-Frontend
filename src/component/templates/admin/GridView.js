@@ -6,7 +6,7 @@ import { Box } from "@mui/system";
 import { Container } from "@mui/material";
 
 export default function GridView(props) {
-  const { variant, data, disableMasonry } = props;
+  const { variant, data, disableMasonry, type } = props;
   // array of objects
   let fullResponseResult = data.result;
 

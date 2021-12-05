@@ -63,13 +63,17 @@ function TableDataRow(props) {
     ) {
       return (
         <>
-          <Tooltip title="Edit ">
-            <IconButton
-              onClick={() => router.push(`/admin/${santriormarkaz}/${id}/edit`)}
-            >
-              <EditIcon />
-            </IconButton>
-          </Tooltip>
+          {santriormarkaz !== "pengguna" ? (
+            <Tooltip title="Edit ">
+              <IconButton
+                onClick={() =>
+                  router.push(`/admin/${santriormarkaz}/${id}/edit`)
+                }
+              >
+                <EditIcon />
+              </IconButton>
+            </Tooltip>
+          ) : null}
           <Tooltip title="Delete">
             <IconButton onClick={() => handleDelete(id)}>
               <DeleteIcon />

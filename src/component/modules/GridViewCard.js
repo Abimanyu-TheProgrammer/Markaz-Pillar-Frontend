@@ -24,7 +24,12 @@ export default function GridViewCard(props) {
 
   const router = useRouter();
   const path = router.pathname;
+  const pathMember = path.split("/")
+  const removedEl = pathMember.shift()
+  const joinedPath = pathMember.join('/')
+
   const isAdmin = currentUserRole === roleType.ROLE_SUPERUSER
+
 
   const isXXS = useMediaQuery("(max-width:400px)");
   const IMAGE_SIZE = 252;
@@ -49,6 +54,7 @@ export default function GridViewCard(props) {
     }
     router.push(`${variant}/${fullResponseResult.id}`)
   }
+
 
   const CTAGroup = () => {
     if (CTAs) {
@@ -91,7 +97,7 @@ export default function GridViewCard(props) {
             >
               Donasi
             </Button>)}
-          <Link href={`${path}/${fullResponseResult.id}`} passHref>
+          <Link href={`${joinedPath}/${fullResponseResult.id}`} passHref>
             <Button
               data-testid="lihat-detail-button-at-gridview-card"
               variant="outlined"
