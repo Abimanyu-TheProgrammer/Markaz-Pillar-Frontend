@@ -18,15 +18,11 @@ import { useAppContext } from "../../context/AppContext";
 import { dispatchTypes, roleType } from "../../context/AppReducer";
 
 export default function GridViewCard(props) {
-  const { variant, fullResponseResult, image, title, description, handleDelete, CTAs } = props;
+  const { variant, fullResponseResult, image, title, description, handleDelete, CTAs, disableCTA } = props;
   const { state, dispatch } = useAppContext();
   const { currentUser, currentUserRole } = state;
 
   const router = useRouter();
-  const path = router.pathname;
-  const pathMember = path.split("/")
-  const removedEl = pathMember.shift()
-  const joinedPath = pathMember.join('/')
 
   const isAdmin = currentUserRole === roleType.ROLE_SUPERUSER
 
@@ -97,7 +93,7 @@ export default function GridViewCard(props) {
             >
               Donasi
             </Button>)}
-          <Link href={`${joinedPath}/${fullResponseResult.id}`} passHref>
+          <Link href={`${variant}/${fullResponseResult.id}`} passHref>
             <Button
               data-testid="lihat-detail-button-at-gridview-card"
               variant="outlined"
@@ -165,11 +161,13 @@ export default function GridViewCard(props) {
             </Typography>
           </CardContent>
         </CardActionArea>
-        <CardActions sx={{ mt: 'auto' }} >
-          <Stack direction="row" width="100%" spacing={2} sx={{ p: 1 }}>
-            <CTAGroup />
-          </Stack>
-        </CardActions>
+        {!disableCTA && (
+          <CardActions sx={{ mt: 'auto' }} >
+            <Stack direction="row" width="100%" spacing={2} sx={{ p: 1 }}>
+              <CTAGroup />
+            </Stack>
+          </CardActions>
+        )}
       </Card>
     </>
   );
