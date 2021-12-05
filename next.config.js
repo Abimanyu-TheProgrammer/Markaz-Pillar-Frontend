@@ -8,7 +8,7 @@ module.exports = withPWA({
     disable: process.env.NODE_ENV === "development",
     // swSrc: 'service-worker.js',
     fallbacks: {
-      image: '/logo.png',
+      image: '/icon.png',
     }
   },
   reactStrictMode: true,

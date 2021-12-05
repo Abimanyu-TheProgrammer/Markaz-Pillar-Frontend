@@ -22,7 +22,7 @@ export default function AdminSantriEdit() {
         markazId: ""
     });
 
-    console.log(editedSantri)
+    
     const editSantri = useCallback(async (data) => {
         return axiosFormData.post(`/admin/santri/edit?id=${santri_id}`, data)
     }, [santri_id])

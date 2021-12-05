@@ -34,6 +34,7 @@ export default function DetailKegiatan(props) {
     )
     const [convertedData, setConvertedData] = useState()
 
+    
     useEffect(() => {
         if (!!responseDetailKegiatan) {
             const dataResult = responseDetailKegiatan.result
