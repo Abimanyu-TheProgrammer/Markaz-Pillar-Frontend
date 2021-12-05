@@ -21,6 +21,8 @@ import ProgresDonasiBar from "../modules/ProgresDonasiBar";
 import Link from 'next/link'
 import { dispatchTypes, enumRoutes } from "../../context/AppReducer";
 import { useAppContext } from "../../context/AppContext";
+import Fallback from "../../pages/_offline";
+import useOnlineStatus from "../../hook/useOnlineStatus";
 
 const useStyles = makeStyles((theme) => ({
   staticTooltipLabel: {
@@ -38,6 +40,7 @@ export default function DetailView(props) {
   const router = useRouter();
   const path = router.pathname;
 
+  const isOnline = useOnlineStatus()
 
   const isDisabled = disableDonasi || !!result && result.nominal === null
 
@@ -87,6 +90,8 @@ export default function DetailView(props) {
       </>
     );
   }
+
+  if (!data && !isOnline) return (<Fallback />)
 
 
   return (

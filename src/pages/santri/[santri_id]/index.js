@@ -7,6 +7,8 @@ import ArrowBack from "../../../component/modules/ArrowBack";
 import ProgresDonasiFooter from "../../../component/modules/ProgresDonasiFooter"
 import { Typography } from "@mui/material";
 import { enumRoutes } from "../../../context/AppReducer";
+import Fallback from "../../_offline";
+import useOnlineStatus from "../../../hook/useOnlineStatus";
 
 const fetcher = url => axiosMain.get(url).then(res => res.data)
 export default function DetailSantri(props) {
@@ -59,7 +61,11 @@ export default function DetailSantri(props) {
     }
   }, [mutate, responseDetailSantri])
 
-  if (error) return (<ArrowBack href={enumRoutes.MEMBER_SANTRI} />);
+  const isOnline = useOnlineStatus()
+  if (error) {
+    if (!isOnline) return (<Fallback />)
+    return (<ArrowBack href={enumRoutes.MEMBER_SANTRI} />);
+  }
   if (!responseDetailSantri) return (
     <>
       <ArrowBack href={enumRoutes.MEMBER_SANTRI} />
