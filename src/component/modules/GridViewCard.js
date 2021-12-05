@@ -38,7 +38,7 @@ export default function GridViewCard(props) {
 
   const handleDonasiCTA = () => {
     if (!!currentUser) {
-      router.push(`${joinedPath}/${fullResponseResult.id}/donasi/bayar`)
+      router.push(`${variant}/${fullResponseResult.id}/donasi/bayar`)
     } else {
       dispatch({ type: dispatchTypes.UNAUTHORIZED_DONASI })
       router.push('/login')
@@ -49,7 +49,10 @@ export default function GridViewCard(props) {
     if (variant === 'relawan') {
       return;
     }
-    router.push(`${joinedPath}/${fullResponseResult.id}`)
+    if (isAdmin) {
+      router.push(`/admin/${variant}/${fullResponseResult.id}`)
+    }
+    router.push(`${variant}/${fullResponseResult.id}`)
   }
 
 
@@ -62,7 +65,7 @@ export default function GridViewCard(props) {
     if (isAdmin) {
       return (
         <Stack direction="row" width="100%" spacing={2} sx={{ p: 1 }}>
-          <Link href={`/admin/${joinedPath}/${fullResponseResult.id}/edit`} passHref>
+          <Link href={`/admin/${variant}/${fullResponseResult.id}/edit`} passHref>
             <Button
               data-testid='edit-button-at-gridview-card'
               variant="contained"
