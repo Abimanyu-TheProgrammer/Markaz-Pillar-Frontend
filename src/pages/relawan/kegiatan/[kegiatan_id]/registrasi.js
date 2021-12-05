@@ -8,7 +8,8 @@ import Dropzone from "../../../../component/modules/Dropzone";
 import { useRouter } from 'next/router'
 import { axiosFormData } from "../../../../axiosInstances";
 import { useAppContext } from "../../../../context/AppContext";
-import { dispatchTypes } from "../../../../context/AppReducer";
+import { dispatchTypes, enumRoutes } from "../../../../context/AppReducer";
+import ArrowBack from '../../../../component/modules/ArrowBack';
 
 export default function RegisterVolunteer() {
     const { dispatch } = useAppContext();
@@ -50,7 +51,7 @@ export default function RegisterVolunteer() {
 
         await axiosFormData
             .post(`volunteer/registration?program_id=${programId}`, data)
-            .then( () => {
+            .then(() => {
 
                 dispatch({
                     type: dispatchTypes.SNACKBAR_CUSTOM,
@@ -100,13 +101,14 @@ export default function RegisterVolunteer() {
     }
 
     useEffect(() => {
-        if(router.isReady) {
+        if (router.isReady) {
             setProgramId(router.query.id)
-        }   
+        }
     }, [router.query.id, router.isReady])
 
     return (
         <div>
+            <ArrowBack href={enumRoutes.MEMBER_KEGIATAN} />
             <Container>
                 <form style={{ marginTop: "5%" }} onSubmit={handleSubmit}>
                     <Grid

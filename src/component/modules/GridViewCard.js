@@ -18,7 +18,7 @@ import { useAppContext } from "../../context/AppContext";
 import { dispatchTypes, roleType } from "../../context/AppReducer";
 
 export default function GridViewCard(props) {
-  const { variant, fullResponseResult, image, title, description, handleDelete, CTAs, disableCTA } = props;
+  const { variant, fullResponseResult, image, title, description, handleDelete, CTAs, disableCTA, type } = props;
   const { state, dispatch } = useAppContext();
   const { currentUser, currentUserRole } = state;
 
@@ -80,6 +80,51 @@ export default function GridViewCard(props) {
         </Stack>
       )
     } else {
+      if (variant === 'kegiatan' && type === 'open') {
+        return (
+          <Stack direction="row" width="100%" spacing={2} sx={{ p: 1 }}>
+            <Link href={`/relawan/kegiatan/${fullResponseResult.id}/registrasi`} passHref>
+              <Button
+                data-testid='edit-button-at-gridview-card'
+                variant="contained"
+                color="primary"
+                fullWidth
+                size="small"
+              >
+                Daftar
+              </Button>
+            </Link>
+            <Link href={`/relawan/kegiatan/${fullResponseResult.id}`} passHref>
+              <Button
+                data-testid="lihat-detail-button-at-gridview-card"
+                variant="outlined"
+                color="primary"
+                fullWidth
+                size="small"
+              >
+                Lihat Detail
+              </Button>
+            </Link>
+          </Stack>
+        )
+      }
+      if (variant === 'kegiatan' && type === 'close') {
+        return (
+          <Stack direction="row" width="100%" spacing={2} sx={{ p: 1 }}>
+            <Link href={`/relawan/kegiatan/${fullResponseResult.id}`} passHref>
+              <Button
+                data-testid="lihat-detail-button-at-gridview-card"
+                variant="outlined"
+                color="primary"
+                fullWidth
+                size="small"
+              >
+                Lihat Detail
+              </Button>
+            </Link>
+          </Stack>
+        )
+      }
       return (
         <Stack direction="row" width="100%" spacing={2} >
           {!!fullResponseResult.hasDonation && (

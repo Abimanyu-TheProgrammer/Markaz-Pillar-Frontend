@@ -12,6 +12,7 @@ package-lock.json
 # testing
 /coverage
 **/.nyc_output/*
+/cypress/integration
 
 # next.js
 /.next/

@@ -8,7 +8,7 @@ import { Button, Typography } from "@mui/material";
 import Link from "next/link";
 import TestimoniKegiatanFooter from "../../../../component/modules/TestimoniKegiatanFooter";
 import { useAppContext } from "../../../../context/AppContext";
-import { dispatchTypes, enumRoutes } from "../../../../context/AppReducer";
+import { dispatchTypes, enumKegiatan, enumRoutes } from "../../../../context/AppReducer";
 
 const fetcher = (url) => axiosMain.get(url).then((res) => res.data);
 
@@ -51,6 +51,10 @@ export default function DetailKegiatan(props) {
           image: dataResult.thumbnailURL,
           details: [
             {
+              subtitle: "Markaz Pelaksana",
+              detail: dataResult.markaz.name,
+            },
+            {
               subtitle: "Syarat",
               detail: dataResult.term,
             },
@@ -63,12 +67,28 @@ export default function DetailKegiatan(props) {
               detail: `${dataResult.volunteerApplied} / ${dataResult.volunteerNeeded}`,
             },
             {
-              subtitle: "Jadwal",
+              subtitle: "Tanggal Pelaksanaan",
               detail: dataResult.schedule,
             },
             {
               subtitle: "Lokasi",
               detail: dataResult.location,
+            },
+            {
+              subtitle: "Status Kegiatan",
+              detail: dataResult.status.split('_').join(" ").toLowerCase(),
+            },
+            {
+              subtitle: "Pendaftaran Dibuka",
+              detail: !!dataResult.programOpened && dataResult.programOpened.split("T").join(" @"),
+            },
+            {
+              subtitle: "Pendaftaran Ditutup",
+              detail: !!dataResult.programClosed && dataResult.programClosed.split("T").join(" @"),
+            },
+            {
+              subtitle: "Program Selesai",
+              detail: !!dataResult.programCompleted && dataResult.programCompleted.split("T").join(" @"),
             },
           ],
         },
@@ -88,6 +108,7 @@ export default function DetailKegiatan(props) {
               `${enumRoutes.MEMBER_KEGIATAN}/${kegiatan_id}/registrasi`
             )
           }
+          disabled={convertedData.result.status === enumKegiatan.SUDAH_DILAKSANAKAN}
         >
           Daftar Sekarang
         </Button>
@@ -104,6 +125,7 @@ export default function DetailKegiatan(props) {
       </>
     );
   }
+
   return (
     <>
       <ArrowBack href={enumRoutes.MEMBER_KEGIATAN} />

@@ -50,28 +50,47 @@ export default function DetailKegiatan() {
                     details: [
                         {
                             subtitle: "Syarat",
-                            detail: dataResult.term
+                            detail: dataResult.term,
                         },
                         {
                             subtitle: "Manfaat",
-                            detail: dataResult.benefit
+                            detail: dataResult.benefit,
                         },
                         {
                             subtitle: "Jumlah Volunteer",
-                            detail: `${dataResult.volunteerApplied} / ${dataResult.volunteerNeeded}`
+                            detail: `${dataResult.volunteerApplied} / ${dataResult.volunteerNeeded}`,
                         },
                         {
-                            subtitle: "Jadwal",
-                            detail: dataResult.schedule
+                            subtitle: "Tanggal Pelaksanaan",
+                            detail: dataResult.schedule,
                         },
                         {
                             subtitle: "Lokasi",
-                            detail: dataResult.location
+                            detail: dataResult.location,
+                        },
+                        {
+                            subtitle: "Markaz Pelaksana",
+                            detail: dataResult.markaz.name,
+                        },
+                        {
+                            subtitle: "Pendaftaran Dibuka",
+                            detail: dataResult.programOpened,
+                        },
+                        {
+                            subtitle: "Pendaftaran Ditutup",
+                            detail: dataResult.programClosed,
+                        },
+                        {
+                            subtitle: "Program Selesai",
+                            detail: dataResult.programCompleted.split("T").join(" "),
+                        },
+                        {
+                            subtitle: "Status Kegiatan",
+                            detail: dataResult.status.split('_').join(" ").toLowerCase(),
                         },
                     ],
-                }
+                },
             })
-
         }
 
     }, [responseDetailKegiatan])
