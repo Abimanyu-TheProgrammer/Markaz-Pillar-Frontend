@@ -11,6 +11,8 @@ import { useAppContext } from "../../../../context/AppContext";
 import { dispatchTypes, enumRoutes } from "../../../../context/AppReducer";
 
 const fetcher = (url) => axiosMain.get(url).then((res) => res.data);
+
+
 export default function DetailKegiatan(props) {
   const { detailKegiatan } = props;
   const router = useRouter();
@@ -94,13 +96,14 @@ export default function DetailKegiatan(props) {
   };
 
   if (error) return <ArrowBack href={enumRoutes.MEMBER_KEGIATAN} />;
-  if (!responseDetailKegiatan)
+  if (!responseDetailKegiatan) {
     return (
       <>
         <ArrowBack href={enumRoutes.MEMBER_KEGIATAN} />
         <Typography component="p">Loading Kegiatan Information..</Typography>
       </>
     );
+  }
   return (
     <>
       <ArrowBack href={enumRoutes.MEMBER_KEGIATAN} />
@@ -114,6 +117,7 @@ export default function DetailKegiatan(props) {
     </>
   );
 }
+
 
 export async function getStaticProps(context) {
   const id = context.params.kegiatan_id;
@@ -134,7 +138,9 @@ export async function getStaticPaths() {
   const staticAllKegiatan = await staticAllKegiatanResponse.data;
 
   const paths = await staticAllKegiatan.result.map((kegiatan) => ({
-    params: { kegiatan_id: kegiatan.id.toString() },
+    params: {
+      kegiatan_id: kegiatan.id.toString()
+    },
   }));
 
   return {
