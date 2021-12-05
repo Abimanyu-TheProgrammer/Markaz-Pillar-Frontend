@@ -27,17 +27,13 @@ export default function DetailKegiatan(props) {
       dispatch({ type: dispatchTypes.LOGIN_NEEDED_RELAWAN });
       router.push(enumRoutes.LOGIN);
     }
-  };
-  const { kegiatan_id } = router.query;
-  const {
-    data: responseDetailKegiatan,
-    error,
-    mutate,
-  } = useSWR(router.isReady ? `/volunteer?id=${kegiatan_id}` : null, fetcher, {
-    fallbackData: detailKegiatan,
-    refreshInterval: 10000,
-  });
-  const [convertedData, setConvertedData] = useState();
+  }
+  const { kegiatan_id } = router.query
+  const { data: responseDetailKegiatan, error, mutate } = useSWR(router.isReady ? `/volunteer?id=${kegiatan_id}` : null,
+    fetcher,
+    { fallbackData: detailKegiatan, refreshInterval: 10000 }
+  )
+  const [convertedData, setConvertedData] = useState()
 
   useEffect(() => {
     if (!!responseDetailKegiatan) {
@@ -125,7 +121,6 @@ export default function DetailKegiatan(props) {
       </>
     );
   }
-
   return (
     <>
       <ArrowBack href={enumRoutes.MEMBER_KEGIATAN} />
